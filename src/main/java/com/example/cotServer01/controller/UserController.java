@@ -1,8 +1,13 @@
 package com.example.cotServer01.controller;
 
 import com.example.cotServer01.domain.User;
+import com.example.cotServer01.dto.PageResponseDTO;
+import com.example.cotServer01.dto.UserRequestDTO;
+import com.example.cotServer01.dto.UserResponseDTO;
 import com.example.cotServer01.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +18,14 @@ import java.util.List;
  */
 
 @RestController //REST API응답을 위한 controller
-@RequestMapping("/users") //기본 URL경로설정
+@RequestMapping("/api/users") //기본 URL경로설정
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     /**
-     * 사용자 등록
+     * 사용자 등록(test)
      * @param user (JSON객체)
      * @return
      */
@@ -56,5 +61,37 @@ public class UserController {
         return ResponseEntity.ok(users);    //HTTP 200 OK + 사용자 리스트 리턴
     }
 
+    /**
+     * createUser(userRequestDto)
+     */
+    @PostMapping
+    public ResponseEntity<UserResponseDTO> createUser(@RequestBody UserRequestDTO reqDto) {
+        return ResponseEntity.ok(userService.createUser(reqDto));
+    }
 
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> findAllUser() {
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> findUserById(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUser(userId));
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable Long userId, @RequestBody UserRequestDTO reqDto) {
+        return ResponseEntity.ok(userService.updateUser(userId, reqDto));
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<PageResponseDTO<UserResponseDTO>> findPage(Pageable pageable) {
+        return ResponseEntity.ok(userService.getUserPage(pageable));
+    }
 }

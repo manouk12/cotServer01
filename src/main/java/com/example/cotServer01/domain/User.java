@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 
 @Entity //JPA에서 관리되는 엔티티 명시(DB테이블로 매핑)
-@Table(name = "users") //생성된 테이블 명을 users로 지정
+@Table(name = "users") //생성된 테이블 명을 users로 지정. 테이블명이 여기에 명시되는거 주의
 
 //Lombok관련 어노테이션
 @Builder //Builder 패턴 사용 명시
