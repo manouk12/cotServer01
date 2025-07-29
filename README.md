@@ -1,6 +1,6 @@
 # cotServer01
 
-사내 관리자 시스템을 위한 Spring Boot 백엔드 API 서버
+사내 관리자 시스템을 위한 Spring Boot 백엔드 API 서버(Spring boot)
 
 ## 주요 기능
 - 사용자 등록 / 수정 / 삭제 / 조회
